@@ -9,48 +9,94 @@
     <input type="password" name="password" required>
     <div class="password error"></div>
     <div class="btnCenter">
-    <button class="btn" type="submit">Login</button>  
+    <button class="btn"  type="submit">Login</button>  
     </div>
 </form>
 
 <script>
+    const form = document.querySelector('form.login');
+  const emailError = document.querySelector('.email.error');
+  const passwordError = document.querySelector('.password.error');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const data = await res.json();
+
+      // ❌ login failed
+      if (!res.ok) {
+        emailError.textContent = data.message;
+        passwordError.textContent = data.message;
+        return;
+      }
+
+      // ✅ login success
+      location.assign('/smoothies');
+
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
+
+
+
+
+
+
     // console.log(emailError, passwordError);
 
-    const form=document.querySelector('form.login');
-    const emailError = document.querySelector('.email.error');
-    const passwordError = document.querySelector('.password.error');
-    // console.log(emailError, passwordError);
+    // const form=document.querySelector('form.login');
+    // const emailError = document.querySelector('.email.error');
+    // const passwordError = document.querySelector('.password.error');
+    // // console.log(emailError, passwordError);
     
-    form.addEventListener('submit',async(e)=>{
-        e.preventDefault();
-        emailError.textContent=' ';
-        passwordError.textContent=' ';
+    // form.addEventListener('submit',async(e)=>{
+    //     e.preventDefault();
+    //     emailError.textContent=' ';
+    //     passwordError.textContent=' ';
 
-        //get values
-        const email=form.email.value;
-        const password=form.password.value;
+    //     //get values
+    //     const email=form.email.value;
+    //     const password=form.password.value;
 
-        try{
-            const res=await fetch('/login',{
-                method:'POST',
-                body:JSON.stringify({email,password}),
-                headers:{'Content-Type':'application/json'}
-            });
-            const data=await res.json();
-            // console.log(data);
-            if(!res.ok){
-                emailError.textContent=data.message;
-                passwordError.textContent=data.message;
+    //     try{
+    //         const res=await fetch('/login',{
+    //             method:'POST',
+    //             body:JSON.stringify({email,password}),
+    //             headers:{'Content-Type':'application/json'}
+    //         });
+    //         const data=await res.json();
+    //         // console.log(data);
+    //         if(!res.ok){
+    //             emailError.textContent=data.message;
+    //             passwordError.textContent=data.message;
+    //             return;
+    //         }
+
 
             
-                console.log("Login successful");
-                location.assign('/smoothies');
-            }
-        }
-        catch(err){
-            console.log(err);
-        }
-    });
+    //             console.log("Login successful");
+    //             location.assign('/smoothies');
+            
+    //     }
+    //     catch(err){
+    //         console.log(err);
+    //     }
+    // });
     
 </script>
 <%- include('partials/footer'); -%>
