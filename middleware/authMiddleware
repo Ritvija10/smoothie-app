@@ -1,12 +1,13 @@
 const jwt=require("jsonwebtoken");
-const auth=(Req,res,next)=>{
-    const token=res.cookies?.jwt;
+const auth=(req,res,next)=>{
+    const token=req.cookies?.jwt;
     if (!token) {
     return res.redirect("/login");
   }
 
-  jwt.verify(token, "secretkey", (err, decoded) => {
+  jwt.verify(token,process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
+      console.log("JWT verification failed:", err.message);
       return res.redirect("/login");
     }
     next();
