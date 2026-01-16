@@ -36,7 +36,8 @@ res.render("signup");
 };
 
 module.exports.signup_post=async(req,res)=>{
-    
+    console.log("SIGNUP BODY:", req.body);
+
 const {email,password}=req.body;
 try{
  
