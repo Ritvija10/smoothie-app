@@ -42,7 +42,7 @@ nav li a{
   letter-spacing: 2px;
 }
 .btn{
-
+  /* pointer-events: none; */
   text-align: center;
   border-radius: 36px;
   background: #FEE996;
@@ -104,6 +104,7 @@ button{
   font-weight: bold;
 }
 header{
+  
   display: flex;
   align-items: center;
 }
@@ -122,6 +123,7 @@ header h3{
   color: #999;
 }
 header .btn{
+  
   margin-top: 20px;
   padding: 12px 18px;
   text-transform: uppercase;
