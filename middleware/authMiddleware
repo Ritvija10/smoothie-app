@@ -1,0 +1,16 @@
+const jwt=require("jsonwebtoken");
+const auth=(Req,res,next)=>{
+    const token=res.cookies?.jwt;
+    if (!token) {
+    return res.redirect("/login");
+  }
+
+  jwt.verify(token, "secretkey", (err, decoded) => {
+    if (err) {
+      return res.redirect("/login");
+    }
+    next();
+  });
+};
+
+module.exports=auth;
